@@ -5,8 +5,19 @@ spring:
   application:
     name: legacy-to-boot
 
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521/FREEPDB1
+    username: system
+    password: 1234
+    driver-class-name: oracle.jdbc.OracleDriver
   mvc:
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp
+
+mybatis:
+  mapper-locations: classpath:/mapper/*.xml
+  type-aliases-package: com.hamzi.legacytoboot
+  configuration:
+    map-underscore-to-camel-case: true	
     
