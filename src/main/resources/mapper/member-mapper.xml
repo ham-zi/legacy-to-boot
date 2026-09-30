@@ -28,4 +28,15 @@
 		       USER_ID = #{userId}
 	</select>
 	
+	<update id="update">
+		UPDATE
+		       LEGACY_USER
+		   SET
+		       USER_NAME = #{userName}
+		     , EMAIL = #{email}
+		 WHERE
+		       USER_ID = #{userId}
+	</update>
+	
+	
 </mapper>

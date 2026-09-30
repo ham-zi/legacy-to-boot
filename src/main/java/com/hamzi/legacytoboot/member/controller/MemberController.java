@@ -2,6 +2,7 @@ package com.hamzi.legacytoboot.member.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -43,6 +44,17 @@ public class MemberController {
 			mv.addObject("message", "로그인 실패").setViewName("include/error_page");
 		}
 		return mv;
+	}
+	
+	@GetMapping("mypage")
+	public String myPage() {
+		return "member/mypage";
+	}
+	
+	@PostMapping("members/{userId}")
+	public String update(MemberDto member, @PathVariable(name="userId") String userId) {
+		memberService.update(member, userId);
+		return "redirct:/mypage";
 	}
 	
 }
