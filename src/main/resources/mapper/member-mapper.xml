@@ -15,5 +15,17 @@
 			   #{email}  
 			 )
 	</insert>
-
+	
+	<select id="findById" resultType="Member">
+		SELECT 
+		       USER_ID
+		     , USER_PWD
+		     , USER_NAME
+		     , EMAIL
+		  FROM
+		       LEGACY_USER
+		 WHERE
+		       USER_ID = #{userId}
+	</select>
+	
 </mapper>

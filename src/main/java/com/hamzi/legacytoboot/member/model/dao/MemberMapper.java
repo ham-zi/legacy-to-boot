@@ -7,4 +7,5 @@ import com.hamzi.legacytoboot.member.model.vo.Member;
 @Mapper
 public interface MemberMapper {
 	public int signup(Member member);
+	public Member findById(String userId);
 }

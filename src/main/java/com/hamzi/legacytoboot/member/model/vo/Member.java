@@ -1,11 +1,11 @@
 package com.hamzi.legacytoboot.member.model.vo;
 
 import lombok.Builder;
-import lombok.Setter;
+import lombok.Getter;
 import lombok.ToString;
 
 @Builder
-@Setter
+@Getter
 @ToString
 public class Member {
 	private String userId;
