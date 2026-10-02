@@ -20,6 +20,7 @@ public class MemberService {
 	private final MemberMapper memberMapper;
 	
 	public void signup(MemberDto member) {
+		checkDuplicatedUserId(member.getUserId());
 		Member userInfo = Member.builder()
 								.userId(member.getUserId())
 								.userPwd(passwordEncoder.encode(member.getUserPwd()))
@@ -30,14 +31,9 @@ public class MemberService {
 	}
 
 	public Member login(LoginDto loginInfo) {
-		Member userInfo = memberMapper.findById(loginInfo.getUserId());
-		if(userInfo == null) {
-			throw new NotFoundException("존재하지 않는 아이디입니다.");
-		}
-		if(passwordEncoder.matches(loginInfo.getUserPwd(), userInfo.getUserPwd())) {
-			return userInfo;
-		}			
-		return null;
+		Member userInfo = vaildateUser(loginInfo.getUserId());
+		vaildatePassword(loginInfo.getUserPwd(), userInfo.getUserPwd());
+		return userInfo;
 	}
 
 	public void update(MemberDto member, String userId) {
@@ -46,8 +42,10 @@ public class MemberService {
 		memberMapper.update(member);
 	}
 	
-	public void delete(String userId) {
-		
+	public void delete(String userPwd, String userId) {
+		Member userInfo = vaildateUser(userId);
+		vaildatePassword(userPwd, userInfo.getUserPwd());
+		memberMapper.delete(userId);
 	}
 	
 	private void vaildateUpdateRequest(MemberDto member) {
@@ -72,6 +70,27 @@ public class MemberService {
 		String regexp = "^[0-9가-힣a-z%]{2,10}$";
 		if(!userName.matches(regexp)) {			
 			throw new NotFoundException("잘못된 닉네임 입력입니다.");
+		}
+	}
+	
+	private void vaildatePassword(String rawPassword, String encPassword) {
+		if(!passwordEncoder.matches(rawPassword, encPassword)) {
+			throw new NotFoundException("비밀번호가 일치하지 않습니다.");
+		}		
+	}
+	
+	private Member vaildateUser(String userId) {
+		Member userInfo = memberMapper.findById(userId);
+		if(userInfo == null) {
+			throw new NotFoundException("존재하지 않는 아이디입니다.");
+		}
+		return userInfo;
+	}
+	
+	private void checkDuplicatedUserId(String userId) {
+		Member userInfo = vaildateUser(userId);
+		if(userInfo != null) {
+			throw new NotFoundException("이미 존재하는 아이디 입니다.");
 		}
 	}
 

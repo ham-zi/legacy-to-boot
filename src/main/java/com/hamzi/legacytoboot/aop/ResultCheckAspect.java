@@ -11,7 +11,7 @@ import com.hamzi.legacytoboot.exception.NotFoundException;
 public class ResultCheckAspect {
 
 	@AfterReturning(
-			pointcut = "execution(int com.hamzi.legacytoboot.member.model.dao.MemberMapper.update(..))",
+			pointcut = "@annotation(com.hazmi-legacytoboot.aop.CheckOne",
 			returning = "result",
 			argNames = "result"
 	)
