@@ -10,4 +10,5 @@ public interface MemberMapper {
 	public int signup(Member member);
 	public Member findById(String userId);
 	public int update(MemberDto member);
+	public int delete(String userId);
 }

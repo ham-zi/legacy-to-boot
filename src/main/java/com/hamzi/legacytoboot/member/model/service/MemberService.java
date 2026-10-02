@@ -43,9 +43,11 @@ public class MemberService {
 	public void update(MemberDto member, String userId) {
 		vaildateUserId(member, userId);
 		vaildateUpdateRequest(member);
-		if(memberMapper.update(member) != 1) {
-			throw new NotFoundException("잘못된 요청입니다.");
-		}
+		memberMapper.update(member);
+	}
+	
+	public void delete(String userId) {
+		
 	}
 	
 	private void vaildateUpdateRequest(MemberDto member) {
@@ -72,4 +74,5 @@ public class MemberService {
 			throw new NotFoundException("잘못된 닉네임 입력입니다.");
 		}
 	}
+
 }

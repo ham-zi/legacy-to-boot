@@ -38,5 +38,12 @@
 		       USER_ID = #{userId}
 	</update>
 	
+	<delete id="delete">
+		DELETE
+		  FROM
+		       LEGACY_USER
+		 WHERE
+		       USER_ID = #{userId}
+	</delete>
 	
 </mapper>
